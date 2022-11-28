@@ -4,25 +4,33 @@
 
 using namespace std;
 
-bool calculo(int moedas[100000], int pos, int desconto) 
+void calculo (int moedas[100000], int pos, int desconto, int limite) 
 {
-    if(((desconto - moedas[pos]) > 0) && pos >= 1)
+    if ((desconto-moedas[pos] > 0) && pos < limite) 
     {
-        calculo(moedas, pos-1, desconto-moedas[pos]);
+        cout << "d:" << desconto-moedas[pos] << endl;
+        calculo(moedas, pos++, desconto-moedas[pos], limite);
     }
-    else if (((desconto - moedas[pos]) < 0) && pos >= 1) 
+    else if ((desconto-moedas[pos] < 0) && pos < limite)
     {
-        calculo(moedas, pos-1,desconto);
+        cout << "d n a:" << desconto << endl;
+        calculo(moedas, pos++, desconto, limite);
     }
-    else if ((desconto - moedas[pos]) == 0) 
+    else if ((desconto-moedas[pos] == 0))
     {
-        return true;
+        cout << "d:" << desconto-moedas[pos] << " " << pos << endl;
+        cout << "S" << endl;
     }
-    return false;
+    else
+    {
+        cout << "d p:" << desconto-moedas[pos] << " " << pos << endl;
+        cout << "N" << endl;
+    }
 }
 
 int main() {
     int i = 0, V = 0, M = 0;
+    bool situacao = false;
     cin >> V >> M;
     int moedas[100000];
     for (i = 0; i < M; i++) {
@@ -31,18 +39,22 @@ int main() {
             i--;
             M--;
         }
+        else if (moedas[i] == V) 
+        {
+            situacao = true;
+        }
     }
-    if(i == 0) {
-            cout << "N" << endl;
-            return 0;
-    }
-    if(calculo(moedas, M-1, V) == true)
+    if (situacao == true) 
     {
         cout << "S" << endl;
+        return 0;
     }
-    else {
+    if (i < 0)
+    {
         cout << "N" << endl;
+        return 0;
     }
+    calculo(moedas, 0, V, M);
 
 }
 
