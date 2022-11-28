@@ -8,13 +8,13 @@ void calculo (int moedas[100000], int pos, int desconto, int limite)
 {
     if ((desconto-moedas[pos] > 0) && pos < limite) 
     {
-        cout << "d:" << desconto-moedas[pos] << endl;
-        calculo(moedas, pos++, desconto-moedas[pos], limite);
+        cout << "d:" << desconto-moedas[pos] << "p" << pos << endl;
+        calculo(moedas, pos+1, desconto-moedas[pos], limite);
     }
     else if ((desconto-moedas[pos] < 0) && pos < limite)
     {
-        cout << "d n a:" << desconto << endl;
-        calculo(moedas, pos++, desconto, limite);
+        cout << "d n a:" << desconto << "p" << pos << endl;
+        calculo(moedas, pos+1, desconto, limite);
     }
     else if ((desconto-moedas[pos] == 0))
     {
